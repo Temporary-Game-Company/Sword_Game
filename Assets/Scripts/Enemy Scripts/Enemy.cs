@@ -1,51 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityMovementAI;
 
 abstract public class Enemy : MonoBehaviour
 {
-    [SerializeField]
-    public int health = 40;
+    protected state current_state = state.Ready;
+    protected enum state {Ready, Attacking, Is_Hit};
 
-    [SerializeField]
-    private float collision_delay = 1f; // How long between collisions with player.
+    [SerializeField] protected int health = 40;
+    private int max_health;
+    [SerializeField] private int xp_worth = 30;
+    [SerializeField] protected PlayerStats player_stats;
+    
+    [SerializeField] private Healthbar health_bar;
 
-    protected bool is_hit = false; // Collision with player on cooldown.
-    protected bool is_attacking = false; // Is currently in a state of attacking.
+    [SerializeField] private float collision_delay = 1f; // How long between collisions with player.
 
+    [SerializeField] protected Rigidbody2D rigidBody; // Enemy rigid body.
+    [SerializeField] Collider2D e_collider; // Enemy collider.
+    [SerializeField] Transform damagePopup; // Enemy collider.
 
-    [HideInInspector]
-    public Rigidbody2D rigidBody; // Enemy rigid body.
-    Collider2D e_collider; // Enemy collider.
+    public Transform target; // Transform object of target (the player).
 
-    SteeringBasics steeringBasics; // Basic Steering Script.
+    abstract protected IEnumerator Attack(Transform target); // Function to attempt attacking.
+    abstract protected void HitPlayer(); // Function to attempt attacking.
+    abstract protected void GetHit(Vector2 velocity); // Function to attempt attacking.
 
-    protected Transform target; // Transform object of target.
-
-    abstract public IEnumerator attack(Transform target); // Function to attempt attacking.
-    abstract public void hitPlayer(); // Function to attempt attacking.
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        rigidBody = GetComponent<Rigidbody2D>();
-        e_collider = GetComponent<Collider2D>();
-        steeringBasics = GetComponent<SteeringBasics>();
-        target = GameObject.FindGameObjectWithTag("Player").transform;        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (!is_hit){
-            moveTowardsPlayer();
-        }
-    }
-
-    void FixedUpdate() 
-    {
-
+    void Start() {
+        max_health = health;
     }
 
     // Collisions
@@ -54,46 +36,48 @@ abstract public class Enemy : MonoBehaviour
         if(collider.tag == "Player") {
             Vector2 velocity = collider.attachedRigidbody.velocity;
 
-            if (is_attacking) hitPlayer();
+            if (current_state == state.Attacking) HitPlayer();
 
-            if (!is_hit && velocity.magnitude > 3f) {
+            if (velocity.magnitude > 3f) {
                 // Get Hit.
-                getHit(velocity);
+                GetHit(velocity);
 
                 // Collision cooldown on
                 Physics2D.IgnoreCollision(collider, e_collider, true);
-                is_hit = true;
+                current_state = state.Is_Hit;
 
                 // Wait for cooldown
                 yield return new WaitForSeconds (collision_delay);
 
                 // Collision cooldown off
                 Physics2D.IgnoreCollision(collider, e_collider, false);
-                is_hit = false;
+                if (current_state == state.Is_Hit) current_state = state.Ready;
             }
         }
     }
 
-    void getHit(Vector2 velocity) {
-        // Bounce Back.
-        rigidBody.velocity = velocity;
+    public void TakeDamage(int damage) {
+        // Instantiates a damage popup.
+        DamagePopup damagePopupScript = Instantiate(damagePopup, transform.position, Quaternion.identity).GetComponent<DamagePopup>();
 
-        // Take Damage.
-        takeDamage((int) velocity.magnitude);
-    }
+        // Checks for crit and creates appropriate damage popup.
+        int crit = Random.Range(0, 10);
+        if (crit==9) {damagePopupScript.Setup(damage*2, scale:1.5f, color:new Color(255/255.0f, 23/255.0f, 25/255.0f, 255/255.0f));}
+        else {damagePopupScript.Setup(damage);}
 
-    protected void moveTowardsPlayer() {
-        Vector3 accel = steeringBasics.Seek(target.position);
-
-        steeringBasics.Steer(accel);
-    }
-
-    public void takeDamage(int damage) {
+        // Applies damage and checks for death.
         health -= damage;
-
         if(health <= 0) {
-            Destroy(gameObject);
-            EventControls.enemyKilled();
+            Die();
         }
+
+        // Updates healthbar.
+        health_bar.update(health, max_health);
+    }
+
+    public void Die() {
+        player_stats.xp.Variable.ApplyChange(xp_worth);
+        EventControls.enemyKilled();
+        Destroy(gameObject);
     }
 }

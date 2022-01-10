@@ -11,10 +11,6 @@ public class GameControls : MonoBehaviour
         screen_middle = new Vector2(Screen.width/2, Screen.height/2);
     }
 
-    void Update() {
-        
-    }
-
     public static void GameOver() {
         SceneManager.LoadScene("GameOver");
     }

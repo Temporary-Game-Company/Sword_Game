@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityMovementAI;
 
 public class MeleeSlime : Enemy
 {
@@ -17,41 +18,63 @@ public class MeleeSlime : Enemy
     private float pounce_force;
     [SerializeField]
     private float damage;
+    [SerializeField]
+    SteeringBasics steeringBasics; // Basic Steering Script.
 
-    void Update() {        
-        if (!(is_attacking || is_hit)){
+    void Update() {
+        // Checks if the slime is busy
+        if (current_state == state.Ready){
+            // Starts attacking if not busy and near player.
             if (Vector2.Distance(transform.position, target.position) < attack_distance && !attack_cooldown) {
-                StartCoroutine("attack", target);
+                StartCoroutine("Attack", target);
             } 
-            moveTowardsPlayer();
+            // Moves towards the player otherwise
+            MoveTowardsPlayer();
             
         }
     }
 
-    public override IEnumerator attack(Transform target) {
+    protected override IEnumerator Attack(Transform target) {
         // Set busy, cooldown, and direction towards target.
         attack_cooldown = true;
         Vector2 direction = ((Vector2)target.position - rigidBody.position).normalized;
 
         // Delay before attack.
         yield return new WaitForSeconds(attack_delay);
-        is_attacking = true;
+        current_state = state.Attacking;
 
         // Attack
         rigidBody.velocity += direction * pounce_force;
 
-        // Delay and disable busy state.
+        // Delay and disable attacking state.
         yield return new WaitForSeconds(attack_duration);
-        is_attacking = false;
+        if (current_state == state.Attacking) current_state = state.Ready;
 
         // Delay and disable attack cooldown.
         yield return new WaitForSeconds(attack_cooldown_duration);
         attack_cooldown = false;
     }
-    public override void hitPlayer() {
-        // Set busy, cooldown, and direction towards target.
-        PlayerControls.damagePlayer((int)damage);
-        is_attacking=false;
 
+    protected override void HitPlayer() {
+        // Set busy, cooldown, and direction towards target.
+        player_stats.hp.Variable.ApplyChange(-damage);
+        if (current_state == state.Attacking) current_state = state.Ready;
+
+    }
+
+    protected override void GetHit(Vector2 velocity) {
+        // Bounce Back.
+        rigidBody.velocity = velocity;
+
+        // Take Damage.
+        TakeDamage((int) velocity.magnitude);
+    }
+
+    private void MoveTowardsPlayer() {
+        // Gets direction towards player.
+        Vector3 accel = steeringBasics.Seek(target.position);
+
+        // Moves towards player.
+        steeringBasics.Steer(accel);
     }
 }

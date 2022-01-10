@@ -29,7 +29,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Text Popups
   - 
   - 
   - 
@@ -47,4 +47,7 @@ TagManager:
     locked: 0
   - name: Player (sorting)
     uniqueID: 1133126031
+    locked: 0
+  - name: Text Popups
+    uniqueID: 199310511
     locked: 0
