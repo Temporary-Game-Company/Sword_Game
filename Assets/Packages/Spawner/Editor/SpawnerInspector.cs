@@ -50,6 +50,11 @@ public class SpawnerInspector : Editor
             EditorGUILayout.PrefixLabel("Boss");
             spawn.unitList[3] = (GameObject)EditorGUILayout.ObjectField(spawn.unitList[3], typeof(GameObject), false);
             EditorGUILayout.EndHorizontal();
+
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.PrefixLabel("Target");
+            spawn.target = (Transform)EditorGUILayout.ObjectField(spawn.target, typeof(Transform), true);
+            EditorGUILayout.EndHorizontal();
         }
         EditorGUILayout.Space();
         showWaveSection = EditorGUILayout.Foldout(showWaveSection, "Set Waves");

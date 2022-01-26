@@ -4,23 +4,28 @@ using UnityEngine;
 
 public class PlayerControls : MonoBehaviour
 {
-    [SerializeField]
-    public static int player_health = 100;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    private static int health = 100;
+
+    private static int level = 1;
+    private static int xp = 0;
+    private static int xp_threshhold = 100;
+
+    public static void GainXP(int xpGain) {
+        xp += xpGain;
+        if (xp > xp_threshhold) LevelUp();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public static void TakeDamage(int damage) {
+        health -= damage;
+        if (health <= 0) GameControls.GameOver();
+        Debug.Log(health);
     }
 
-    public static void damagePlayer(int damage) {
-        player_health -= damage;
-        if (player_health <= 0) GameControls.GameOver();
-        Debug.Log(player_health);
+    public static void LevelUp() {
+        level += 1;
+        Debug.Log(level);
+
+        xp_threshhold = (int) (level * Mathf.Log(level) * 100 + 100);
+        xp = 0;
     }
 }

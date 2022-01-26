@@ -5,24 +5,13 @@ using CorruptedSmileStudio.Spawn;
 
 public class EventControls : MonoBehaviour
 {
-    [SerializeField]
-    static Spawner spawner;
 
     private static int enemiesKilled = 0;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        spawner = GetComponentInChildren<Spawner>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    // Increases number of enemies killed and tracks waves.
     public static void enemyKilled() {
+        Spawner spawner = GameAssets.assets.spawner;
+
         enemiesKilled++;
         switch (enemiesKilled) {
             case int n when n==spawner.totalWaves+1:

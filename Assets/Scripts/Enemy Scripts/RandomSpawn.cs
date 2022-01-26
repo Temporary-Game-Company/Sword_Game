@@ -13,13 +13,10 @@ public class RandomSpawn : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Teleports enemy in a random direction.
         transform.position = (Vector2)transform.position + Random.insideUnitCircle.normalized * spawn_distance;
-        spriteRenderer.enabled = true;
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        // Makes the enemy visible after teleporting.
+        spriteRenderer.enabled = true;
     }
 }

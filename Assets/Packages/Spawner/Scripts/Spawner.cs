@@ -88,6 +88,10 @@ public class Spawner : MonoBehaviour
     /// The location of where to spawn units.
     /// </summary>
     public Transform spawnLocation;
+    /// <summary>
+    /// The target for the units.
+    /// </summary>
+    public Transform target;
     #endregion
 
     void Start()
@@ -108,6 +112,7 @@ public class Spawner : MonoBehaviour
         {
             Transform unit = InstanceManager.Spawn(unitList[(int)unitLevel].transform, spawnLocation.position, Quaternion.identity);
 			unit.GetComponent<SpawnAI>().SetOwner(this);
+            unit.GetComponent<Enemy>().target = this.target;
             // Increase the total number of enemies spawned and the number of spawned enemies
             numberOfUnits++;
             totalSpawnedUnits++;

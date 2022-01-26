@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e72f6b73e971beb4481fb136254fd7ec, type: 3}
+  m_Name: Player Stats
+  m_EditorClassIdentifier: 
+  hp:
+    UseConstant: 0
+    ConstantValue: 100
+    Variable: {fileID: 11400000, guid: 1671531da7953aa4d8f7864c015861b6, type: 2}
+  max_hp:
+    UseConstant: 0
+    ConstantValue: 100
+    Variable: {fileID: 11400000, guid: f641a29597b82fb41901eab3f63b1a62, type: 2}
+  xp:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: 9b59093e50c2a8543ab99a2cc051b44c, type: 2}
+  level:
+    UseConstant: 0
+    ConstantValue: 1
+    Variable: {fileID: 11400000, guid: 915c14566d4214442bf73e0f24a21d69, type: 2}

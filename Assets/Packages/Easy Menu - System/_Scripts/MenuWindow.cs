@@ -219,7 +219,8 @@ public class MenuWindow : MonoBehaviour
 		}
 
 
-		if (scrollViewSize == Vector2.zero)   scrollViewSize = size;
+		// if (scrollViewSize == Vector2.zero)   scrollViewSize = size;
+		scrollViewSize = size;
 
 		windowRect = new Rect( currentPosition.x, currentPosition.y, size.x, size.y) ;
 
