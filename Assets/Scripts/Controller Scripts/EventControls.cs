@@ -8,8 +8,10 @@ public class EventControls : MonoBehaviour
 
     private static int enemiesKilled = 0;
 
+    [SerializeField] private GameEvent victory_event;
+
     // Increases number of enemies killed and tracks waves.
-    public static void enemyKilled() {
+    public void enemyKilled() {
         Spawner spawner = GameAssets.assets.spawner;
 
         enemiesKilled++;
@@ -30,7 +32,7 @@ public class EventControls : MonoBehaviour
                 spawner.StartSpawn();
                 break;
             case int n when n==(spawner.totalWaves+1)*4:
-                GameControls.Victory();
+                victory_event.Raise();
                 break;
         }
     }

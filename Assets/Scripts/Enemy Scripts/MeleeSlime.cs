@@ -5,21 +5,14 @@ using UnityMovementAI;
 
 public class MeleeSlime : Enemy
 {
-    [SerializeField]
-    private float attack_delay;
-    [SerializeField]
-    private float attack_duration;
-    [SerializeField]
-    private float attack_distance;
+    [SerializeField] private float attack_delay;
+    [SerializeField] private float attack_duration;
+    [SerializeField] private float attack_distance;
     public bool attack_cooldown = false; // Attack cooldown.
-    [SerializeField]
-    private float attack_cooldown_duration;
-    [SerializeField]
-    private float pounce_force;
-    [SerializeField]
-    private float damage;
-    [SerializeField]
-    SteeringBasics steeringBasics; // Basic Steering Script.
+    [SerializeField] private float attack_cooldown_duration;
+    [SerializeField] private float pounce_force;
+    [SerializeField] private float damage;
+    [SerializeField] SteeringBasics steeringBasics; // Basic Steering Script.
 
     void Update() {
         // Checks if the slime is busy
@@ -57,7 +50,7 @@ public class MeleeSlime : Enemy
 
     protected override void HitPlayer() {
         // Set busy, cooldown, and direction towards target.
-        player_stats.hp.Variable.ApplyChange(-damage);
+        player_stats.ApplyDamage(damage);
         if (current_state == state.Attacking) current_state = state.Ready;
 
     }

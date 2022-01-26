@@ -18,7 +18,7 @@ PrefabInstance:
     - target: {fileID: 417192794126655216, guid: d71e0e4e6fae7604fb2f606c4e15394c, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 1a857c487da9d3a4f8cd138822569006, type: 3}
+      objectReference: {fileID: 21300000, guid: 127fd05fbc68f344f902255eb72349ea, type: 3}
     - target: {fileID: 417192794126655216, guid: d71e0e4e6fae7604fb2f606c4e15394c, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
@@ -79,6 +79,10 @@ PrefabInstance:
       propertyPath: attack_delay
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 417192794126655222, guid: d71e0e4e6fae7604fb2f606c4e15394c, type: 3}
+      propertyPath: killed_event
+      value: 
+      objectReference: {fileID: 11400000, guid: 88c67724ddc94fd4ba6a4b4fdea2ec11, type: 2}
     - target: {fileID: 417192794126655222, guid: d71e0e4e6fae7604fb2f606c4e15394c, type: 3}
       propertyPath: pounce_force
       value: 10
