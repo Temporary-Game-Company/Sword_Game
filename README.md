@@ -1,2 +1,2 @@
 # Sword-Game
- Game with sword :)
+ You control a flying sword with your cursor!
