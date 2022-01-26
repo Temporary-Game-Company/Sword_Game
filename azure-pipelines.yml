@@ -2,7 +2,7 @@ trigger:
 - main
 
 pool:
-  name: Unity Windows
+  name: Default
 
 steps:
 - task: UnityBuildTask@3
