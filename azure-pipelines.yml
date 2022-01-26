@@ -1,0 +1,16 @@
+trigger:
+- main
+
+pool:
+  name: Unity Windows
+
+steps:
+- task: UnityBuildTask@3
+  name: unitybuild
+  inputs:
+    buildTarget: standalone
+    outputPath: $(Build.BinariesDirectory)
+    outputFileName: drop
+
+- script: |
+    echo $(unitybuild.logsOutputPath)
