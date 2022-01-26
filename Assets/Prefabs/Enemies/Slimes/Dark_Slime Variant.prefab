@@ -69,8 +69,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 417192794126655219, guid: d71e0e4e6fae7604fb2f606c4e15394c, type: 3}
       propertyPath: m_Name
-      value: Dark_Slime
+      value: Dark_Slime Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 417192794126655222, guid: d71e0e4e6fae7604fb2f606c4e15394c, type: 3}
+      propertyPath: killed_event
+      value: 
+      objectReference: {fileID: 11400000, guid: 88c67724ddc94fd4ba6a4b4fdea2ec11, type: 2}
     m_RemovedComponents:
     - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: d71e0e4e6fae7604fb2f606c4e15394c, type: 3}

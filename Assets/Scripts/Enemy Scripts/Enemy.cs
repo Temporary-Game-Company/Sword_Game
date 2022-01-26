@@ -19,6 +19,7 @@ abstract public class Enemy : MonoBehaviour
     [SerializeField] protected Rigidbody2D rigidBody; // Enemy rigid body.
     [SerializeField] Collider2D e_collider; // Enemy collider.
     [SerializeField] Transform damagePopup; // Enemy collider.
+    [SerializeField] GameEvent killed_event;
 
     public Transform target; // Transform object of target (the player).
 
@@ -70,14 +71,11 @@ abstract public class Enemy : MonoBehaviour
         if(health <= 0) {
             Die();
         }
-
-        // Updates healthbar.
-        health_bar.update(health, max_health);
     }
 
     public void Die() {
-        player_stats.xp.Variable.ApplyChange(xp_worth);
-        EventControls.enemyKilled();
+        player_stats.GainXP(xp_worth);
+        killed_event.Raise();
         Destroy(gameObject);
     }
 }

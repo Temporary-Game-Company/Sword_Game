@@ -11,10 +11,10 @@ public class GameControls : MonoBehaviour
         screen_middle = new Vector2(Screen.width/2, Screen.height/2);
     }
 
-    public static void GameOver() {
+    public void GameOver() {
         SceneManager.LoadScene("GameOver");
     }
-    public static void Victory() {
+    public void Victory() {
         SceneManager.LoadScene("Victory");
     }
 }
