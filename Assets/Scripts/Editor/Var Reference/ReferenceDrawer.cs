@@ -1,48 +1,51 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomPropertyDrawer(typeof(FloatReference))]
-public class ReferenceDrawer : PropertyDrawer
+namespace TemporaryGameCompany
 {
-    private readonly string[] popupOptions = {"User Constant", "Use Variable"}; // Options of drawer button.
-    private GUIStyle popupStyle; // Style of drawer button.
-
-    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+    [CustomPropertyDrawer(typeof(FloatReference))]
+    public class ReferenceDrawer : PropertyDrawer
     {
-        // Style of drawer.
-        popupStyle = GUI.skin.GetStyle("PaneOptions"); // Sets popup style.
-        popupStyle.imagePosition = ImagePosition.ImageOnly; // Only displays image of GUI.
+        private readonly string[] popupOptions = {"User Constant", "Use Variable"}; // Options of drawer button.
+        private GUIStyle popupStyle; // Style of drawer button.
 
-        label = EditorGUI.BeginProperty(position, label, property); // Label marks beginning of property.
-        position = EditorGUI.PrefixLabel(position, label); // Label is a prefix to property.
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        {
+            // Style of drawer.
+            popupStyle = GUI.skin.GetStyle("PaneOptions"); // Sets popup style.
+            popupStyle.imagePosition = ImagePosition.ImageOnly; // Only displays image of GUI.
 
-        EditorGUI.BeginChangeCheck(); // Checks for changed.
+            label = EditorGUI.BeginProperty(position, label, property); // Label marks beginning of property.
+            position = EditorGUI.PrefixLabel(position, label); // Label is a prefix to property.
 
-        // Get Properties of Refrerence.
-        SerializedProperty useConstant = property.FindPropertyRelative("UseConstant");
-        SerializedProperty constantValue = property.FindPropertyRelative("ConstantValue");
-        SerializedProperty variable = property.FindPropertyRelative("Variable");
+            EditorGUI.BeginChangeCheck(); // Checks for changed.
 
-        // Calculate rect for configuration button.
-        Rect buttonRect = new Rect(position);
-        buttonRect.yMin += popupStyle.margin.top;
-        buttonRect.width = popupStyle.fixedWidth + popupStyle.margin.right;
-        position.xMin = buttonRect.xMax;
+            // Get Properties of Refrerence.
+            SerializedProperty useConstant = property.FindPropertyRelative("UseConstant");
+            SerializedProperty constantValue = property.FindPropertyRelative("ConstantValue");
+            SerializedProperty variable = property.FindPropertyRelative("Variable");
 
-        int indent = EditorGUI.indentLevel; // Stores old indent level.
-        EditorGUI.indentLevel = 0; // Sets indent level to 0.
+            // Calculate rect for configuration button.
+            Rect buttonRect = new Rect(position);
+            buttonRect.yMin += popupStyle.margin.top;
+            buttonRect.width = popupStyle.fixedWidth + popupStyle.margin.right;
+            position.xMin = buttonRect.xMax;
 
-        int result = EditorGUI.Popup(buttonRect, useConstant.boolValue ? 0 : 1, popupOptions, popupStyle); // Gets result of user's choice.
+            int indent = EditorGUI.indentLevel; // Stores old indent level.
+            EditorGUI.indentLevel = 0; // Sets indent level to 0.
 
-        useConstant.boolValue = result == 0; // Sets value based on user's choice (inversed).
+            int result = EditorGUI.Popup(buttonRect, useConstant.boolValue ? 0 : 1, popupOptions, popupStyle); // Gets result of user's choice.
 
-        EditorGUI.PropertyField(position, useConstant.boolValue ? constantValue : variable, GUIContent.none); // Displays reference value.
+            useConstant.boolValue = result == 0; // Sets value based on user's choice (inversed).
 
-        if (EditorGUI.EndChangeCheck()) property.serializedObject.ApplyModifiedProperties(); // Changes value in reference if needed.
+            EditorGUI.PropertyField(position, useConstant.boolValue ? constantValue : variable, GUIContent.none); // Displays reference value.
 
-        EditorGUI.indentLevel = indent; // Resets Indent.
-        EditorGUI.EndProperty(); // End of property.
+            if (EditorGUI.EndChangeCheck()) property.serializedObject.ApplyModifiedProperties(); // Changes value in reference if needed.
+
+            EditorGUI.indentLevel = indent; // Resets Indent.
+            EditorGUI.EndProperty(); // End of property.
 
 
+        }
     }
 }

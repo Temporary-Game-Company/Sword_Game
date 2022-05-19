@@ -1,25 +1,28 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GameEventListener : MonoBehaviour
+namespace TemporaryGameCompany
 {
-    [Tooltip("Event registered with.")]
-    public GameEvent Event;
-    [Tooltip("Response invoked when event raised.")]
-    public UnityEvent Response;
-
-    private void OnEnable()
+    public class GameEventListener : MonoBehaviour
     {
-        Event.RegisterListener(this);
-    }
+        [Tooltip("Event registered with.")]
+        public GameEvent Event;
+        [Tooltip("Response invoked when event raised.")]
+        public UnityEvent Response;
 
-    private void OnDisable()
-    {
-        Event.UnregisterListener(this);
-    }
+        private void OnEnable()
+        {
+            Event.RegisterListener(this);
+        }
 
-    public void OnEventRaised()
-    {
-        Response.Invoke();
+        private void OnDisable()
+        {
+            Event.UnregisterListener(this);
+        }
+
+        public void OnEventRaised()
+        {
+            Response.Invoke();
+        }
     }
 }

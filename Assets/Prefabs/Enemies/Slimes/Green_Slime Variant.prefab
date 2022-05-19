@@ -37,15 +37,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 417192794126655218, guid: d71e0e4e6fae7604fb2f606c4e15394c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.75
       objectReference: {fileID: 0}
     - target: {fileID: 417192794126655218, guid: d71e0e4e6fae7604fb2f606c4e15394c, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 417192794126655218, guid: d71e0e4e6fae7604fb2f606c4e15394c, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 417192794126655218, guid: d71e0e4e6fae7604fb2f606c4e15394c, type: 3}
       propertyPath: m_LocalRotation.y
@@ -98,6 +98,22 @@ PrefabInstance:
     - target: {fileID: 417192794126655222, guid: d71e0e4e6fae7604fb2f606c4e15394c, type: 3}
       propertyPath: attack_cooldown_duration
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 732960379292833666, guid: d71e0e4e6fae7604fb2f606c4e15394c, type: 3}
+      propertyPath: m_Size.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 732960379292833666, guid: d71e0e4e6fae7604fb2f606c4e15394c, type: 3}
+      propertyPath: m_Size.y
+      value: 1.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 732960379292833666, guid: d71e0e4e6fae7604fb2f606c4e15394c, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 127fd05fbc68f344f902255eb72349ea, type: 3}
+    - target: {fileID: 732960379292833666, guid: d71e0e4e6fae7604fb2f606c4e15394c, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d71e0e4e6fae7604fb2f606c4e15394c, type: 3}

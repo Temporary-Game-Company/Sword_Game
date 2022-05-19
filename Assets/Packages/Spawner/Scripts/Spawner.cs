@@ -11,6 +11,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using CorruptedSmileStudio.Spawn;
+using TemporaryGameCompany;
 
 /// <summary>
 /// Spawns prefabs, either in waves, at once or continually till all enemies are spawned.

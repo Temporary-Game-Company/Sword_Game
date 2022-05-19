@@ -1,35 +1,38 @@
 using System;
 using UnityEngine;
 
-[Serializable]
-public class FloatReference
+namespace TemporaryGameCompany
 {
-    public bool UseConstant = true;
-    public float ConstantValue;
-    public FloatVariable Variable;
-
-    // Default Constructor.
-    public FloatReference() 
-    { }
-
-    // Constructor for constants.
-    public FloatReference(float value)
+    [Serializable]
+    public class FloatReference
     {
-        UseConstant = true;
-        ConstantValue = value;
-    }
+        public bool UseConstant = true;
+        public float ConstantValue;
+        public FloatVariable Variable;
 
-    // Getter for value.
-    public float Value
-    {
-        get { return UseConstant ? ConstantValue : 
-                                   Variable.Value; }
-        set { Variable.Value = value; }
-    }
+        // Default Constructor.
+        public FloatReference() 
+        { }
 
-    // Implicit conversion to float.
-    public static implicit operator float(FloatReference reference)
-    {
-        return reference.Value;
+        // Constructor for constants.
+        public FloatReference(float value)
+        {
+            UseConstant = true;
+            ConstantValue = value;
+        }
+
+        // Getter for value.
+        public float Value
+        {
+            get { return UseConstant ? ConstantValue : 
+                                    Variable.Value; }
+            set { Variable.Value = value; }
+        }
+
+        // Implicit conversion to float.
+        public static implicit operator float(FloatReference reference)
+        {
+            return reference.Value;
+        }
     }
 }
