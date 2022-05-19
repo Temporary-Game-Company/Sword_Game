@@ -2,33 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Variables/FloatVariable")]
-public class FloatVariable : ScriptableObject
+namespace TemporaryGameCompany
 {
-    #if UNITY_EDITOR
-    [Multiline] public string DeveloperDescription = "";
-    #endif
-
-    public float Value; // Value of float.
-
-    // Set value.
-    public void SetValue(float value) 
-    { 
-        Value = value; 
-    }
-
-    public void SetValue(FloatVariable value) 
+    [CreateAssetMenu(menuName = "Variables/FloatVariable")]
+    public class FloatVariable : ScriptableObject
     {
-        Value = value.Value;
-    }
+        #if UNITY_EDITOR
+        [Multiline] public string DeveloperDescription = "";
+        #endif
 
-    public void ApplyChange(float amount)
-    {
-        Value += amount;
-    }
+        public float Value; // Value of float.
 
-    public void ApplyChange(FloatVariable amount)
-    {
-        Value += amount.Value;
+        // Set value.
+        public void SetValue(float value) 
+        { 
+            Value = value; 
+        }
+
+        public void SetValue(FloatVariable value) 
+        {
+            Value = value.Value;
+        }
+
+        public void ApplyChange(float amount)
+        {
+            Value += amount;
+        }
+
+        public void ApplyChange(FloatVariable amount)
+        {
+            Value += amount.Value;
+        }
     }
 }

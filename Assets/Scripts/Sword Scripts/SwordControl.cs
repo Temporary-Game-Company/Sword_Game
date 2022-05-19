@@ -2,22 +2,49 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SwordControl : MonoBehaviour
+namespace TemporaryGameCompany
 {
-    [SerializeField] PlayerStats stats;
-    [SerializeField] PlayerStats original_stats;
-    [SerializeField] private GameEvent gameover_event;
+    public class SwordControl : StatBlock
+    {
+        [SerializeField] private SwordRuntimeContainer _container;
 
-    void Start() {
-        Reset_Stats();
-    }
+        public void Awake()
+        {
+            this.Initialize();
+        }
 
-    void Reset_Stats() {
-        stats.SetStats(original_stats);
-    }
+        public void OnEnable()
+        {
+            _container.Add(this);
+        }
 
-    void Update() {
-        // Game Over if hp falls to 0.
-        if (stats.hp <= 0) gameover_event.Raise();
+        public void OnDisable()
+        {
+            _container.Remove(this);
+        }
+
+        public void LevelUp() 
+        {
+            this.GetStat(Stat.Level).Increase(1);
+        }
+
+        public void ApplyDamage(float amount)
+        {
+            this.GetStat(Stat.Health).Decrease(amount);
+        }
+
+        public void GainXP(float amount)
+        {
+            this.GetStat(Stat.XP).Increase(amount);
+            if (this.GetStat(Stat.XP).Value > this.ExperienceThreshhold())
+            {
+                LevelUp();
+            }
+        }
+
+        public float ExperienceThreshhold()
+        {
+            return (this.GetStat(Stat.Level).Value * Mathf.Log(this.GetStat(Stat.Level).Value) * 100 + 100);
+        }
     }
 }
