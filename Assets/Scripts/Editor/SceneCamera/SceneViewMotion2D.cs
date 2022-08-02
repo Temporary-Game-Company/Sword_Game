@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 
 namespace TemporaryGameCompany
 {
@@ -35,6 +36,11 @@ namespace TemporaryGameCompany
             }
          
             if (sceneView.isRotationLocked)
+            {
+                return;
+            }
+
+            if (EditorSceneManager.GetActiveScene().name != "Main Scene - Temp")
             {
                 return;
             }

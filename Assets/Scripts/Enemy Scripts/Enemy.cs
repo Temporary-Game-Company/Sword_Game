@@ -13,13 +13,11 @@ namespace TemporaryGameCompany
         private int max_health;
         [SerializeField] private int xp_worth = 30;
         [SerializeField] protected SwordRuntimeContainer _swordContainer;
-        
-        [SerializeField] private Healthbar health_bar;
 
         [SerializeField] private float collision_delay = 1f; // How long between collisions with player.
 
-        [SerializeField] protected Rigidbody2D rigidBody; // Enemy rigid body.
-        [SerializeField] Collider2D e_collider; // Enemy collider.
+        [SerializeField] protected Rigidbody rigidBody; // Enemy rigid body.
+        [SerializeField] Collider e_collider; // Enemy collider.
         [SerializeField] Transform damagePopup; // Enemy collider.
         [SerializeField] GameEvent killed_event;
 
@@ -27,7 +25,7 @@ namespace TemporaryGameCompany
 
         abstract protected IEnumerator Attack(Transform target); // Function to attempt attacking.
         abstract protected void HitPlayer(); // Function to attempt attacking.
-        abstract protected void GetHit(Vector2 velocity); // Function to attempt attacking.
+        abstract protected void GetHit(Vector3 velocity); // Function to attempt attacking.
 
         void Start() 
         {
@@ -35,18 +33,18 @@ namespace TemporaryGameCompany
         }
 
         // Collisions
-        IEnumerator OnTriggerEnter2D(Collider2D collider) 
+        IEnumerator OnTriggerEnter(Collider collider) 
         {
             // Collision with player.
             if(collider.tag == "Player") {
-                Vector2 incomingVelocity = collider.attachedRigidbody.velocity;
+                Vector3 incomingVelocity = collider.attachedRigidbody.velocity;
 
                 if (current_state == state.Attacking) 
                     HitPlayer();
 
                 if (incomingVelocity.magnitude > 3f) {
                     // Collision cooldown on
-                    Physics2D.IgnoreCollision(collider, e_collider, true);
+                    Physics.IgnoreCollision(collider, e_collider, true);
                     current_state = state.Is_Hit;
 
                     // Get Hit.
@@ -56,7 +54,7 @@ namespace TemporaryGameCompany
                     yield return new WaitForSeconds (collision_delay);
 
                     // Collision cooldown off
-                    Physics2D.IgnoreCollision(collider, e_collider, false);
+                    Physics.IgnoreCollision(collider, e_collider, false);
                     if (current_state == state.Is_Hit) current_state = state.Ready;
                 }
             }

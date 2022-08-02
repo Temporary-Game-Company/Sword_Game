@@ -20,7 +20,7 @@ namespace TemporaryGameCompany
             // Checks if the slime is busy
             if (current_state == state.Ready){
                 // Starts attacking if not busy and near player.
-                if (Vector2.Distance(transform.position, target.position) < attack_distance && !attack_cooldown) {
+                if (Vector3.Distance(transform.position, target.position) < attack_distance && !attack_cooldown) {
                     StartCoroutine("Attack", target);
                 } 
                 // Moves towards the player otherwise
@@ -32,7 +32,7 @@ namespace TemporaryGameCompany
         protected override IEnumerator Attack(Transform target) {
             // Set busy, cooldown, and direction towards target.
             attack_cooldown = true;
-            Vector2 direction = ((Vector2)target.position - rigidBody.position).normalized;
+            Vector3 direction = (target.position - rigidBody.position).normalized;
 
             // Delay before attack.
             yield return new WaitForSeconds(attack_delay);
@@ -57,7 +57,7 @@ namespace TemporaryGameCompany
 
         }
 
-        protected override void GetHit(Vector2 velocity) {
+        protected override void GetHit(Vector3 velocity) {
             // Bounce Back.
             rigidBody.velocity = velocity;
 
